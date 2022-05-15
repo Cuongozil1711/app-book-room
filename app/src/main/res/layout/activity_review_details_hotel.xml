@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReviewDetailsHotel">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorStarBar"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:layout_gravity="center"
+            android:id="@+id/btBack"
+            android:outlineAmbientShadowColor="@color/white"
+            android:background="@color/colorStarBar"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/tvImage"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/two" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Cảm ơn khách hàng đã sử dụng dịch vụ bên tôi, xin hãy đánh giá chất lượng khách sạn theo cảm nhận của quý khách"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:text="Đánh giá dịch vụ"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBa45"
+                style="@style/ThemeOverlay.MaterialComponents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:rating="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView45" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Bình luận"
+                android:gravity="left"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:id="@+id/reviewHotel"
+                android:hint="Đánh giá"
+                android:inputType="text"
+                android:ems="10"
+                android:textSize="14dp"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/ic_custom_input"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="Đánh giá ngay"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_custom_button"
+            android:id="@+id/btnReview"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</LinearLayout>

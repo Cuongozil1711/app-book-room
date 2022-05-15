@@ -2,10 +2,18 @@ package com.example.finalandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.example.finalandroid.api.ApiService;
+import com.example.finalandroid.custom.ProgressDialogCustom;
+import com.example.finalandroid.model.UserRoom;
 import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
@@ -19,6 +27,8 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -39,6 +49,10 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ConfirmBookRoom extends AppCompatActivity {
 
     private Room room;
@@ -48,11 +62,14 @@ public class ConfirmBookRoom extends AppCompatActivity {
     private SqliteHelper sqliteHelper;
     private User user;
     private Button btnBookRoom;
+    private ProgressDialogCustom progressDialogCustom;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_book_room);
+        context = this;
         getIntentView();
         getInitView();
         sqliteHelper = new SqliteHelper(this);
@@ -65,19 +82,72 @@ public class ConfirmBookRoom extends AppCompatActivity {
         userName.setText(user.getName());
         phoneUser.setText(user.getPhone());
         idPrice.setText(room.getPrice());
-
+        progressDialogCustom = new ProgressDialogCustom(this);
         btnBookRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createPdf();
+                UserRoom us = new UserRoom();
+                us.setIdUser(user.getId());
+                us.setIdRoom(room.getIdRoom());
+                us.setDateFrom(bookRoomOfUser.getTimeNhan());
+                us.setDateTo(bookRoomOfUser.getTimeTra());
+                us.setIsPayMent("0");
+                us.setIsDelete("0");
+                progressDialogCustom.show();
+                insertUserRoom(us);
+                //createPdf();
+            }
+        });
+    }
+
+    private void insertUserRoom(UserRoom us) {
+        ApiService.apiService.bookRoom(us).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                progressDialogCustom.hide();
+                if(response.body() != null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("ZoZoy thông báo");
+                    builder.setMessage("Bạn đã đặt thành công phòng: " + room.getName() + "- khách sạn: " + hotel.getName());
+                    builder.setIcon(R.drawable.ic_baseline_done_24);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("ZoZoy thông báo");
+                            builder.setMessage("Bạn có muốn in hóa đơn hay không ?");
+                            builder.setIcon(R.drawable.ic_baseline_mobile_screen_share_24);
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    createPdf();
+                                }
+                            });
+                            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
 
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                progressDialogCustom.hide();
+            }
         });
     }
 
     private void createPdf() {
         try {
-            String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+            String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
             SimpleDateFormat sp = new SimpleDateFormat("yyyy/mm/dd");
             File file = new File(pdfPath, hotel.getName() + "_"  + room.getName() + "_" + ".pdf");
             OutputStream ops = new FileOutputStream(file);
@@ -138,9 +208,11 @@ public class ConfirmBookRoom extends AppCompatActivity {
 
             document.close();
             Toast.makeText(getApplicationContext(), "Đặt phòng thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            startActivity(intent);
         }
         catch (Exception ex){
-            Toast.makeText(getApplicationContext(), "Lỗi đặt phòng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Lỗi in hóa đơn", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(ex);
         }
 

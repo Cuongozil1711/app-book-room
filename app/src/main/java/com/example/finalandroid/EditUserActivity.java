@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
+import com.example.finalandroid.custom.ModalSelectCustomer;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.custom.RealPathUtil;
 import com.example.finalandroid.dal.SqliteHelper;
@@ -51,12 +53,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Multipart;
 
-public class EditUserActivity extends AppCompatActivity {
+public class EditUserActivity extends AppCompatActivity implements ModalSelectCustomer.BottomSelectOptionListener{
 
     private static final int MY_REQUEST_CODE = 10;
-    private TextView idPhone;
+    private TextView idPhone, gender;
     private EditText idName, idEmail, eEdit;
-    private Spinner spinner;
+    private ImageButton btSelectGender;
     private ImageView profile_image;
     private Bitmap bitmap;
     private Button btUpdate;
@@ -103,10 +105,11 @@ public class EditUserActivity extends AppCompatActivity {
         idName = findViewById(R.id.idName);
         idEmail = findViewById(R.id.idEmail);
         eEdit = findViewById(R.id.eEdit);
-        spinner = findViewById(R.id.spinner);
+        gender = findViewById(R.id.gender);
         profile_image = findViewById(R.id.profile_image);
         btUpdate = findViewById(R.id.btUpdate);
-        spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.item_spinner, getResources().getStringArray(R.array.gender)));
+        btSelectGender = findViewById(R.id.btSelectGender);
+//        spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.item_spinner, getResources().getStringArray(R.array.gender)));
         sq = new SqliteHelper(this);
         context = this;
         progressDialogCustom = new ProgressDialogCustom(this);
@@ -148,7 +151,7 @@ public class EditUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 user.setName(idName.getText().toString().trim());
                 user.setEmail(idEmail.getText().toString().trim());
-                user.setGener(String.valueOf(spinner.getSelectedItemPosition()));
+                user.setGener(String.valueOf(gender.getText()));
                 user.setAge(eEdit.getText().toString());
                 if (user != null) {
                     progressDialogCustom.show();
@@ -179,6 +182,14 @@ public class EditUserActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btSelectGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ModalSelectCustomer modalSelectCustomer = new ModalSelectCustomer();
+                modalSelectCustomer.show(getSupportFragmentManager(), "ModalSelectCustomer");
+            }
+        });
     }
 
     void setData(){
@@ -188,11 +199,7 @@ public class EditUserActivity extends AppCompatActivity {
             idName.setText(user.getName());
             idEmail.setText(user.getEmail());
             eEdit.setText(user.getAge());
-            if (user.getGener().equals("1")) {
-                spinner.setSelection(1);
-            } else {
-                spinner.setSelection(2);
-            }
+            gender.setText(user.getGener());
 
             if (user.getImage() != null) {
                 //setExistImage(profile_image, user.getImage());
@@ -239,5 +246,10 @@ public class EditUserActivity extends AppCompatActivity {
         super.onResume();
         if(!checkChangeImage)
         setData();
+    }
+
+    @Override
+    public void onClickOption(String text) {
+        gender.setText(text);
     }
 }

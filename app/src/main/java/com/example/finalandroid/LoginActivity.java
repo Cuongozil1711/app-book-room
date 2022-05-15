@@ -111,19 +111,22 @@ public class LoginActivity extends AppCompatActivity {
 //        SMS
 //        PhoneAuthOptions options =
 //                PhoneAuthOptions.newBuilder(auth)
-//                        .setPhoneNumber(phoneEdit)       // Phone number to verify
+//                        .setPhoneNumber("+84 987137534")       // Phone number to verify
 //                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
 //                        .setActivity(this)                 // Activity (for callback binding)
-//                        .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+//                        .setCallbacks(
+//                            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 //                            @Override
 //                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
 //                                progressBar.setVisibility(View.GONE);
+//                                progressDialogCustom.hide();
 //                                signInWithPhoneAuthCredential(phoneAuthCredential);
 //                            }
 //
 //                            @Override
 //                            public void onVerificationFailed(@NonNull FirebaseException e) {
 //                                progressBar.setVisibility(View.GONE);
+//                                progressDialogCustom.hide();
 //                                Toast.makeText(getApplicationContext(), "The verification failed", Toast.LENGTH_SHORT).show();
 //                            }
 //
@@ -132,9 +135,11 @@ public class LoginActivity extends AppCompatActivity {
 //                            public void onCodeSent(@NonNull String verfyID, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
 //                                super.onCodeSent(verfyID, forceResendingToken);
 //                                progressBar.setVisibility(View.GONE);
+//                                progressDialogCustom.hide();
 //                                goToEnterActivity(phoneEdit, verfyID);
 //                            }
-//                        })          // OnVerificationStateChangedCallbacks
+//                        }
+//                        )          // OnVerificationStateChangedCallbacks
 //                        .build();
 //        PhoneAuthProvider.verifyPhoneNumber(options);
         loginToServer(phoneEdit);

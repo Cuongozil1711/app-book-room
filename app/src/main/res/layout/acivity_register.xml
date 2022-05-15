@@ -118,19 +118,26 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/facebook" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:src="@drawable/facebook"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFF"/>
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitXY"
-            android:layout_marginHorizontal="10dp"
-            android:src="@drawable/img_3" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_3"
+            android:layout_marginHorizontal="15dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFF"/>
+
 
     </LinearLayout>
 

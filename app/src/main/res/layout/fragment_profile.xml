@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"
-                        android:text="Lịch sử đặt phòng"
+                        android:text="Phòng đang đặt"
                         android:textStyle="normal"
                         android:textSize="16dp"/>
 
@@ -138,7 +138,8 @@
                             android:textColor="@color/black"
                             android:layout_marginTop="10dp"
                             android:textStyle="normal"
-                            android:text="Khách sạn yêu thích"
+                            android:text="Đánh giá khách sạn đã đặt"
+                            android:id="@+id/reviewHotel"
                             android:textSize="16dp"/>
 
                     </LinearLayout>

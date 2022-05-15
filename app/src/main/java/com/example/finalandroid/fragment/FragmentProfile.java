@@ -18,14 +18,15 @@ import com.example.finalandroid.EditUserActivity;
 import com.example.finalandroid.LoginActivity;
 import com.example.finalandroid.R;
 import com.example.finalandroid.RegisterActivity;
+import com.example.finalandroid.ReviewHotelAcitivity;
 import com.example.finalandroid.User;
 import com.example.finalandroid.dal.SqliteHelper;
 
-public class FragmentProfile extends Fragment {
+public class FragmentProfile extends Fragment{
 
     private User user;
     private SqliteHelper sqliteHelper;
-    private TextView txName, txMail, txPhone;
+    private TextView txName, txMail, txPhone, reviewHotel;
     private ImageButton editUser;
     private Button idSignOut;
     @Nullable
@@ -44,6 +45,7 @@ public class FragmentProfile extends Fragment {
         txMail = view.findViewById(R.id.idEmail);
         idSignOut = view.findViewById(R.id.idSignOut);
         editUser = view.findViewById(R.id.btEdit);
+        reviewHotel = view.findViewById(R.id.reviewHotel);
         if(user != null){
             txName.setText(user.getName());
             txMail.setText(user.getEmail());
@@ -63,6 +65,18 @@ public class FragmentProfile extends Fragment {
                 startActivity(i);
             }
         });
+
+        reviewHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reviewHotelOf(view);
+            }
+        });
+    }
+
+    public void reviewHotelOf(View view){
+        Intent i = new Intent(getActivity().getApplication() , ReviewHotelAcitivity.class);
+        startActivity(i);
     }
 
     public void signOut(){

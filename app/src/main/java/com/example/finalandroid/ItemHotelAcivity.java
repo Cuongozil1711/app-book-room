@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,10 +28,12 @@ import com.example.finalandroid.custom.ConfigGetData;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.fragment.FragmentBook;
 import com.example.finalandroid.model.Hotel;
+import com.example.finalandroid.model.ReviewHotel;
 import com.example.finalandroid.model.Room;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,16 +44,17 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
 
     private Hotel hotel;
     private ImageView imageHotel;
-    private TextView phone, star, title, address, tvMota;
+    private TextView phone, star, title, address, tvMota, nameReview, dayReview, reviewStar, idReview, sumReivew;
     private ImageButton btBack;
     private RecyclerView recyclerView;
     private RecycleViewRoomApdater adapter;
     private RecycleViewRoomApdater.ItemListener itemListener;
     private List<Room> list;
+    private List<ReviewHotel> listReview;
     private Context context;
     private AppBarLayout appBarLayout;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private Toolbar toolbar;
+//    private CollapsingToolbarLayout collapsingToolbarLayout;
+//    private Toolbar toolbar;
     private boolean isExpanded = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +67,21 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         address = findViewById(R.id.idAdress);
         btBack = findViewById(R.id.btBack);
         tvMota = findViewById(R.id.tvMota);
+        nameReview = findViewById(R.id.nameReview);
+        dayReview = findViewById(R.id.dayReview);
+        reviewStar = findViewById(R.id.reviewStar);
+        idReview = findViewById(R.id.idReview);
+        sumReivew = findViewById(R.id.sumReivew);
         getIntentItem();
         recyclerView = findViewById(R.id.recycleView);
         appBarLayout = findViewById(R.id.appBarLayout);
-        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
-        toolbar = findViewById(R.id.toolBar);
+//        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
+//        toolbar = findViewById(R.id.toolBar);
         initToolBar();
         itemListener = this;
         context = this;
         getListRoom();
+        getListReview();
         initToolBarAnimation();
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,38 +91,65 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         });
     }
 
+    private void getListReview() {
+        ProgressDialogCustom progressDialogCustom = new ProgressDialogCustom(context);
+        progressDialogCustom.show();
+        ApiService.apiService.getReview(Integer.valueOf(hotel.getId())).enqueue(new Callback<List<ReviewHotel>>() {
+            @Override
+            public void onResponse(Call<List<ReviewHotel>> call, Response<List<ReviewHotel>> response) {
+                progressDialogCustom.hide();
+                if(response.body() != null){
+                    listReview = response.body();
+                    if(listReview.size() > 0){
+                        nameReview.setText(listReview.get(0).getNameReview());
+                        dayReview.setText(listReview.get(0).getDayReview());
+                        reviewStar.setText(listReview.get(0).getReviewStar());
+                        idReview.setText(listReview.get(0).getIdReview());
+                        sumReivew.setText(String.valueOf(listReview.size()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ReviewHotel>> call, Throwable t) {
+                progressDialogCustom.hide();
+                Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initToolBar() {
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+//        setSupportActionBar(toolbar);
+//        if(getSupportActionBar() != null){
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
     }
 
     private void initToolBarAnimation(){
-        collapsingToolbarLayout.setTitle(hotel.getName());
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.two);
-
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(@Nullable Palette palette) {
-                int myColor = palette.getVibrantColor(getResources().getColor(R.color.colorChecked));
-                collapsingToolbarLayout.setContentScrimColor(myColor);
-                collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(R.color.colorPrimary));
-            }
-        });
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if(Math.abs(verticalOffset) > 200){
-                    isExpanded = false;
-                }
-                else{
-                    isExpanded = true;
-                }
-                invalidateOptionsMenu();
-            }
-        });
+//        collapsingToolbarLayout.setTitle(hotel.getName());
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.two);
+//
+//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//            @Override
+//            public void onGenerated(@Nullable Palette palette) {
+//                int myColor = palette.getVibrantColor(getResources().getColor(R.color.colorChecked));
+//                collapsingToolbarLayout.setContentScrimColor(myColor);
+//                collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(R.color.colorPrimary));
+//            }
+//        });
+//
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                if(Math.abs(verticalOffset) > 200){
+//                    isExpanded = false;
+//                }
+//                else{
+//                    isExpanded = true;
+//                }
+//                invalidateOptionsMenu();
+//            }
+//        });
     }
 
     private void getListRoom() {
@@ -177,6 +214,12 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
 
     public void listRoom(View view){
         Intent intent = new Intent(this, ListRoomOfHotel.class);
+        intent.putExtra("hotel", hotel);
+        startActivity(intent);
+    }
+
+    public void listReview(View view){
+        Intent intent = new Intent(this, ListReview.class);
         intent.putExtra("hotel", hotel);
         startActivity(intent);
     }

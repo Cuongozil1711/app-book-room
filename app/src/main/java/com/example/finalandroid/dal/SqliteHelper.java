@@ -73,7 +73,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
             String image = rs.getString(9);
             list.add(new User(id, email, name, password, phone, age, address, typeLogin, gender, image));
         }
+        if(list.size() > 0)
         return list.get(0);
+        else return null;
     }
 
     public int delete(int id){

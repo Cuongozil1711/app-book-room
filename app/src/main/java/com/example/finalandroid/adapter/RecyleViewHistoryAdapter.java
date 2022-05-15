@@ -61,7 +61,7 @@ public class RecyleViewHistoryAdapter extends RecyclerView.Adapter<RecyleViewHis
         holder.tvDis.setText(historyBookRoom.getRoom().getDescribe());
         holder.tvPrice.setText(historyBookRoom.getRoom().getPrice());
         holder.dateTime.setText("Nhập phòng: " + historyBookRoom.getUserRoom().getDateFrom());
-        holder.dateTimeTo.setText("Trả phòng" + historyBookRoom.getUserRoom().getDateTo());
+        holder.dateTimeTo.setText("Trả phòng: " + historyBookRoom.getUserRoom().getDateTo());
     }
 
     @Override

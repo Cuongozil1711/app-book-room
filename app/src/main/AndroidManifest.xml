@@ -17,6 +17,15 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ReviewDetailsHotel"
+            android:exported="false" />
+        <activity
+            android:name=".ReviewHotelAcitivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListReview"
+            android:exported="false" />
+        <activity
             android:name=".ConfirmBookRoom"
             android:exported="false" />
         <activity

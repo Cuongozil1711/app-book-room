@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:id="@+id/btBack"
             android:outlineAmbientShadowColor="@color/white"
-            android:background="@color/white"
+            android:background="@color/colorStarBar"
         />
 
         <TextView
@@ -177,12 +177,28 @@
                 android:textSize="18dp" />
 
 
-            <Spinner
+            <TextView
+                android:id="@+id/gender"
                 android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:background="#EAE9E9"
-                android:layout_weight="2"
-                android:id="@+id/spinner"/>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp"
+                android:clickable="true"
+                android:enabled="true"
+                android:text="Nam"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:layout_gravity="center"
+                android:id="@+id/btSelectGender"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:outlineAmbientShadowColor="@color/white"
+                android:background="@color/colorStarBar"
+                />
         </LinearLayout>
 
         <RelativeLayout
