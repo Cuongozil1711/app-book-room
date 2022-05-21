@@ -33,7 +33,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.7:8080/")
+            .baseUrl("http://192.168.0.102:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService.class);
@@ -77,4 +77,6 @@ public interface ApiService {
     @POST("reviewHotel")
     Call<Integer> reviewHotel(@Body UserHotel us);
 
+    @GET("listUserRoom")
+    Call<List<UserRoom>> getListUserRoom(@Query("id") Integer id);
 }

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.finalandroid.adapter.RecycleViewRoomApdater;
@@ -32,6 +33,7 @@ public class ListRoomOfHotel extends AppCompatActivity implements RecycleViewRoo
     private List<Room> list;
     private Context context;
     private Hotel hotel;
+    private ImageButton btBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,16 @@ public class ListRoomOfHotel extends AppCompatActivity implements RecycleViewRoo
         setContentView(R.layout.activity_list_room_of_hotel);
         getIntentView();
         recyclerView = findViewById(R.id.recycleView);
+        btBack = findViewById(R.id.btBack);
         itemListener = this;
         context = this;
         getListRoom();
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void getListRoom() {
@@ -85,5 +94,10 @@ public class ListRoomOfHotel extends AppCompatActivity implements RecycleViewRoo
         intent.putExtra("room", room);
         intent.putExtra("hotel", hotel);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -6,6 +6,78 @@
     android:background="@color/white"
 >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:gravity="left"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/idName"
+                android:textColor="@color/black"
+                android:layout_marginTop="25dp"
+                android:textStyle="bold"
+                android:text="User1"
+                android:textSize="25dp"/>
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:id="@+id/btEdit"
+                android:clickable="true"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/idPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="0528129662"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/idEmail"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:textStyle="normal"
+                android:text="cuongnv.nsmv@gmail.com"
+                android:textSize="16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/divider"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,65 +92,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/idName"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="35dp"
-                        android:text="Nguyễn Viết Cường"
-                        android:textSize="18dp"/>
-                    <ImageButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_edit_24"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="35dp"
-                        android:id="@+id/btEdit"
-                        android:clickable="true"
-                        android:background="@color/white"
-                        />
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/idPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="0528129662"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/idEmail"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
-                        android:text="cuongnv.nsmv@gmail.com"
-                        android:textSize="16dp"/>
-                </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,9 +104,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textStyle="normal"
-                        android:layout_marginTop="15dp"
-                        android:text="Truy cập nhanh"
+                        android:textStyle="bold"
+                        android:layout_marginTop="25dp"
+                        android:text="Trang của tôi"
                         android:textSize="18dp"/>
 
                     <LinearLayout
@@ -102,7 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="25dp"
                             android:src="@drawable/ic_baseline_history_24"
                             android:text="5.8"
                             android:textStyle="bold" />
@@ -110,8 +126,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
-                        android:text="Phòng đang đặt"
+                        android:layout_marginTop="25dp"
+                        android:text="Đặt phòng của tôi"
                         android:textStyle="normal"
                         android:textSize="16dp"/>
 
@@ -127,8 +143,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:src="@drawable/ic_baseline_thumb_up_24"
+                            android:layout_marginTop="25dp"
+                            android:src="@drawable/ic_baseline_reviews_24"
                             android:text="5.8"
                             android:textStyle="bold" />
 
@@ -136,13 +152,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="25dp"
                             android:textStyle="normal"
-                            android:text="Đánh giá khách sạn đã đặt"
+                            android:text="Đánh giá khách sạn"
                             android:id="@+id/reviewHotel"
                             android:textSize="16dp"/>
 
                     </LinearLayout>
+
 
             </LinearLayout>
 
@@ -150,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorDivider"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,8 +177,81 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textStyle="normal"
-                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="25dp"
+                    android:text="Cài đặt"
+                    android:textSize="18dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_baseline_add_alarm_24"
+                        android:text="5.8"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="25dp"
+                        android:text="Thông báo"
+                        android:textStyle="normal"
+                        android:textSize="16dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_baseline_language_24"
+                        android:text="5.8"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="25dp"
+                        android:textStyle="normal"
+                        android:text="Ngôn ngữ"
+                        android:textSize="16dp"/>
+
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorDivider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="25dp"
                     android:text="Thông tin"
                     android:textSize="18dp"/>
 
@@ -174,15 +264,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/ic_baseline_question_mark_24"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_baseline_request_quote_24"
                         android:text="5.8"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:text="Hỏi đáp"
                         android:textStyle="normal"
                         android:textSize="16dp"/>
@@ -198,7 +288,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:src="@drawable/ic_baseline_aod_24"
                         android:text="5.8"
                         android:textStyle="bold" />
@@ -207,10 +297,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:textStyle="normal"
                         android:text="Phiên bản"
                         android:textSize="16dp"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="1.1"
+                        android:textStyle="normal"
+                        android:textSize="16dp"/>
+
 
                 </LinearLayout>
 
@@ -223,7 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:src="@drawable/ic_baseline_comment_24"
                         android:text="5.8"
                         android:textStyle="bold" />
@@ -232,7 +334,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:textStyle="normal"
                         android:text="Điều khoản &amp; Chính sách bảo mật"
                         android:textSize="16dp"/>
@@ -247,7 +349,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/ic_baseline_contact_phone_24"
                         android:text="5.8"
@@ -257,7 +359,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:textStyle="normal"
                         android:text="Liên hệ"
                         android:textSize="16dp"/>
@@ -270,19 +372,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorDivider"/>
 
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:enabled="true"
-                android:text="Đăng xuất"
-                android:id="@+id/idSignOut"
-                android:background="@color/white"
-                android:textColor="@color/colorChecked"
-                android:textSize="18dp"
-                android:textStyle="normal" />
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="25dp"
+                    android:text="Khác"
+                    android:textSize="18dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/signOut"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_baseline_request_quote_24"
+                        android:text="5.8"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="25dp"
+                        android:text="Đăng xuất"
+                        android:textStyle="normal"
+                        android:textSize="16dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:enabled="true"-->
+<!--                android:text="Đăng xuất"-->
+<!--                android:id="@+id/idSignOut"-->
+<!--                android:background="@color/white"-->
+<!--                android:textColor="@color/colorChecked"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="normal" />-->
         </LinearLayout>
     </ScrollView>
 

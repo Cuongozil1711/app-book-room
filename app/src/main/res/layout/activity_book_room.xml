@@ -8,37 +8,40 @@
     android:orientation="vertical"
     tools:context=".ItemHotelAcivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:gravity="left"
+        android:weightSum="2"
+        android:orientation="horizontal">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:layout_gravity="left"
+            android:foregroundGravity="left"
+            android:id="@+id/btBack"
+            android:outlineAmbientShadowColor="@color/white"
+            android:background="@color/white"
+            />
 
-            <ImageView
-                android:id="@+id/tvImageHotel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/two"
-                app:layout_collapseMode="parallax" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MIA HOTEL HANOI"
+            android:id="@+id/nameTabar"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+    </LinearLayout>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolBar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/Theme.AppCompat.Light"
-                app:layout_collapseMode="pin" />
-
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -50,6 +53,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/tvImageHotel"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/two"
+                app:layout_collapseMode="parallax" />
+
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -83,16 +96,20 @@
                         android:textSize="16dp" />
                 </LinearLayout>
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
+                    android:id="@+id/ud"
                     android:background="@drawable/boder_input"
                     android:paddingHorizontal="5dp"
                     android:text="Ưu đãi"
                     android:textColor="@color/colorChecked"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -196,6 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:id="@+id/btTimeNhan"
                     android:weightSum="1">
 
                     <LinearLayout
@@ -228,7 +246,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="21:00, 13/05/2022"
+                        android:text="21:00 26/05/2022"
                         android:textSize="15dp"
                         android:id="@+id/timeNhan"
                         android:textStyle="bold"/>
@@ -238,6 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:id="@+id/btTimeTra"
                     android:layout_marginLeft="20dp"
                     android:weightSum="1">
 
@@ -263,7 +282,7 @@
                             android:layout_height="24dp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="5dp"
-                            android:text="Nhận phòng"
+                            android:text="Trả phòng"
                             android:textColor="@color/black"
                             android:textSize="15dp" />
                     </LinearLayout>
@@ -271,7 +290,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="21:00, 13/05/2022"
+                        android:text="21:00 26/05/2022"
                         android:id="@+id/timeTra"
                         android:textSize="15dp"
                         android:textStyle="bold"/>

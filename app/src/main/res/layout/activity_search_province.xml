@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditUserActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorChecked"
+        android:layout_height="60dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:background="@drawable/img_login"
+        android:layout_marginTop="-60dp"
+        android:gravity="left"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="15dp"
+                android:textStyle="normal"
+                android:text="Chọn tỉnh/ thành phố"
+                android:textSize="20dp"/>
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_close_24"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="30dp"
+                android:foregroundGravity="left"
+                android:id="@+id/btBack"
+                android:outlineAmbientShadowColor="@color/white"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+<!--            <EditText-->
+<!--                android:layout_width="280dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:id="@+id/evKeySearch"-->
+<!--                android:hint="Tìm kiếm ..."-->
+<!--                android:ellipsize="end"-->
+<!--                android:inputType="text"-->
+<!--                android:ems="10"-->
+<!--                android:textSize="14dp"-->
+<!--                android:drawablePadding="12dp"-->
+<!--                android:paddingStart="12dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:paddingEnd="12dp"-->
+<!--                android:drawableStart="@drawable/ic_baseline_search_24"-->
+<!--                android:background="@drawable/ic_custom_input_search"-->
+<!--                android:textColor="@color/black"/>-->
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_location_on_24"
+                android:id="@+id/btEdit"
+                android:clickable="true"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/boder_input"
+                android:paddingHorizontal="5dp"
+                android:text="Gần bạn"
+                android:textColor="@color/colorChecked" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:id="@+id/recycleViewSearch"
+        />
+
+
+</LinearLayout>

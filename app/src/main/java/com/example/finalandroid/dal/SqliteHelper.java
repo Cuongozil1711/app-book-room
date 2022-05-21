@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.finalandroid.User;
+import com.example.finalandroid.model.Hotel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,8 @@ public class SqliteHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         return sqLiteDatabase.insert("userTable", null, values);
     }
+
+
     public User getUser(){
         List<User> list = new ArrayList<>();
         SQLiteDatabase st = getReadableDatabase();

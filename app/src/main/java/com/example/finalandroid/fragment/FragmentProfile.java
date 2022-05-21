@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,7 @@ public class FragmentProfile extends Fragment{
         txName = view.findViewById(R.id.idName);
         txPhone = view.findViewById(R.id.idPhone);
         txMail = view.findViewById(R.id.idEmail);
-        idSignOut = view.findViewById(R.id.idSignOut);
+        //idSignOut = view.findViewById(R.id.idSignOut);
         editUser = view.findViewById(R.id.btEdit);
         reviewHotel = view.findViewById(R.id.reviewHotel);
         if(user != null){
@@ -51,12 +52,12 @@ public class FragmentProfile extends Fragment{
             txMail.setText(user.getEmail());
             txPhone.setText(user.getPhone());
         }
-        idSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        });
+//        idSignOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                signOut();
+//            }
+//        });
 
         editUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +71,14 @@ public class FragmentProfile extends Fragment{
             @Override
             public void onClick(View view) {
                 reviewHotelOf(view);
+            }
+        });
+
+        LinearLayout sigoutBt = (LinearLayout) view.findViewById(R.id.signOut);
+        sigoutBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
             }
         });
     }

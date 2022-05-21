@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +21,8 @@ import com.example.finalandroid.R;
 import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
+import com.example.finalandroid.dal.SqliteHelper;
+import com.example.finalandroid.dal.SqliteHelperHotel;
 import com.example.finalandroid.model.Hotel;
 
 import java.util.List;
@@ -32,6 +37,7 @@ public class FragmentBook  extends Fragment implements RecycleViewHotelAdapter.I
     private RecycleViewHotelAdapter adapter;
     private List<Hotel> list;
     private RecycleViewHotelAdapter.ItemListener itemListener;
+    private SqliteHelperHotel sqliteHelper;
 
     @Nullable
     @Override
@@ -43,34 +49,22 @@ public class FragmentBook  extends Fragment implements RecycleViewHotelAdapter.I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycleView);
-        getHotelNearUser();
+        sqliteHelper = new SqliteHelperHotel(getContext());
+        adapter = new RecycleViewHotelAdapter();
         itemListener = this;
+        adapter.setItemListener(itemListener);
+        getListHotel();
+        getHotelNearUser();
     }
 
 
 
     private void getHotelNearUser() {
-        ProgressDialogCustom progressDialogCustom = new ProgressDialogCustom(getContext());
-        progressDialogCustom.show();
-        ApiService.apiService.getHotel().enqueue(new Callback<List<Hotel>>() {
-            @Override
-            public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
-                progressDialogCustom.hide();
-                list = response.body();
-                adapter = new RecycleViewHotelAdapter();
-                adapter.setmList(list);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(adapter);
-                adapter.setItemListener(itemListener);
-            }
-
-            @Override
-            public void onFailure(Call<List<Hotel>> call, Throwable t) {
-                progressDialogCustom.hide();
-                Toast.makeText(getContext(), "Call api error", Toast.LENGTH_SHORT).show();
-            }
-        });
+        list = sqliteHelper.searchByAddress("Hà Nội");
+        adapter.setmList(list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -86,5 +80,43 @@ public class FragmentBook  extends Fragment implements RecycleViewHotelAdapter.I
 //        super.onResume();
 //        getHotelNearUser();
 //    }
+
+
+    public void getListHotel(){
+        ProgressDialogCustom progressDialogCustom = new ProgressDialogCustom(getContext());
+        progressDialogCustom.show();
+        ApiService.apiService.getHotel().enqueue(new Callback<List<Hotel>>() {
+            @Override
+            public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
+                progressDialogCustom.hide();
+                list = response.body();
+                if(list != null){
+                    deleteAllHotel();
+                    for(Hotel item : list){
+                        sqliteHelper.addHotel(item);
+                    }
+                }
+                //adapter = new RecycleViewHotelAdapter();
+                //adapter.setmList(list);
+                //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+                //recyclerView.setLayoutManager(linearLayoutManager);
+                //recyclerView.setAdapter(adapter);
+                //adapter.setItemListener(itemListener);
+            }
+
+            @Override
+            public void onFailure(Call<List<Hotel>> call, Throwable t) {
+                progressDialogCustom.hide();
+                Toast.makeText(getContext(), "Call api error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteAllHotel(){
+        List<Hotel> getAll = sqliteHelper.getAllHotel();
+        for(Hotel hotel : getAll){
+            sqliteHelper.deleteAllHotel(hotel.getId());
+        }
+    }
 
 }

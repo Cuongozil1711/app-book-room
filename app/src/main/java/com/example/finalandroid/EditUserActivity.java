@@ -3,7 +3,6 @@ package com.example.finalandroid;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,33 +13,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
-import com.example.finalandroid.custom.ModalSelectCustomer;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.custom.RealPathUtil;
 import com.example.finalandroid.dal.SqliteHelper;
-import com.example.finalandroid.dto.Userbean;
-import com.example.finalandroid.model.Room;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -51,14 +42,13 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
-public class EditUserActivity extends AppCompatActivity implements ModalSelectCustomer.BottomSelectOptionListener{
+public class EditUserActivity extends AppCompatActivity{
 
     private static final int MY_REQUEST_CODE = 10;
-    private TextView idPhone, gender;
+    private TextView idPhone;
     private EditText idName, idEmail, eEdit;
-    private ImageButton btSelectGender;
+    private RadioButton radio_nam, radio_nu;
     private ImageView profile_image;
     private Bitmap bitmap;
     private Button btUpdate;
@@ -105,11 +95,10 @@ public class EditUserActivity extends AppCompatActivity implements ModalSelectCu
         idName = findViewById(R.id.idName);
         idEmail = findViewById(R.id.idEmail);
         eEdit = findViewById(R.id.eEdit);
-        gender = findViewById(R.id.gender);
+        radio_nam = findViewById(R.id.radio_nam);
+        radio_nu = findViewById(R.id.radio_nu);
         profile_image = findViewById(R.id.profile_image);
         btUpdate = findViewById(R.id.btUpdate);
-        btSelectGender = findViewById(R.id.btSelectGender);
-//        spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.item_spinner, getResources().getStringArray(R.array.gender)));
         sq = new SqliteHelper(this);
         context = this;
         progressDialogCustom = new ProgressDialogCustom(this);
@@ -151,7 +140,9 @@ public class EditUserActivity extends AppCompatActivity implements ModalSelectCu
             public void onClick(View view) {
                 user.setName(idName.getText().toString().trim());
                 user.setEmail(idEmail.getText().toString().trim());
-                user.setGener(String.valueOf(gender.getText()));
+                if(radio_nam.isChecked())
+                user.setGener("Nam");
+                else user.setGener("Nữ");
                 user.setAge(eEdit.getText().toString());
                 if (user != null) {
                     progressDialogCustom.show();
@@ -183,13 +174,7 @@ public class EditUserActivity extends AppCompatActivity implements ModalSelectCu
             }
         });
 
-        btSelectGender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ModalSelectCustomer modalSelectCustomer = new ModalSelectCustomer();
-                modalSelectCustomer.show(getSupportFragmentManager(), "ModalSelectCustomer");
-            }
-        });
+
     }
 
     void setData(){
@@ -199,7 +184,12 @@ public class EditUserActivity extends AppCompatActivity implements ModalSelectCu
             idName.setText(user.getName());
             idEmail.setText(user.getEmail());
             eEdit.setText(user.getAge());
-            gender.setText(user.getGener());
+            if(user.getGener().equals("Nam")){
+                radio_nam.setSelected(true);
+            }
+            else{
+                radio_nu.setSelected(true);
+            }
 
             if (user.getImage() != null) {
                 //setExistImage(profile_image, user.getImage());
@@ -246,10 +236,5 @@ public class EditUserActivity extends AppCompatActivity implements ModalSelectCu
         super.onResume();
         if(!checkChangeImage)
         setData();
-    }
-
-    @Override
-    public void onClickOption(String text) {
-        gender.setText(text);
     }
 }

@@ -5,9 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
@@ -78,6 +82,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         sql = new SqliteHelper(this);
+
+        Window window = this.getWindow();
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+// finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorChecked));
     }
 
     private void login(){
@@ -111,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
 //        SMS
 //        PhoneAuthOptions options =
 //                PhoneAuthOptions.newBuilder(auth)
-//                        .setPhoneNumber("+84 987137534")       // Phone number to verify
+//                        .setPhoneNumber("+84 528129662")       // Phone number to verify
 //                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
 //                        .setActivity(this)                 // Activity (for callback binding)
 //                        .setCallbacks(
@@ -130,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
 //                                Toast.makeText(getApplicationContext(), "The verification failed", Toast.LENGTH_SHORT).show();
 //                            }
 //
-//
 //                            @Override
 //                            public void onCodeSent(@NonNull String verfyID, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
 //                                super.onCodeSent(verfyID, forceResendingToken);
@@ -142,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        )          // OnVerificationStateChangedCallbacks
 //                        .build();
 //        PhoneAuthProvider.verifyPhoneNumber(options);
-        loginToServer(phoneEdit);
+        loginToServer("0528129662");
     }
 
     public void loginToServer(String phone){

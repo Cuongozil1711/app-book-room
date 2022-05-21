@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.bottom_nav);
         viewPager = findViewById(R.id.viewPaper);
         fab = findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,5 +122,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int key_code, KeyEvent key_event) {
+        if (key_code== KeyEvent.KEYCODE_BACK) {
+            super.onKeyDown(key_code, key_event);
+            return false;
+        }
+        return true;
     }
 }

@@ -44,17 +44,14 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
 
     private Hotel hotel;
     private ImageView imageHotel;
-    private TextView phone, star, title, address, tvMota, nameReview, dayReview, reviewStar, idReview, sumReivew;
-    private ImageButton btBack;
+    private TextView phone, star, title, address, tvMota, nameReview, dayReview, reviewStar, idReview, sumReivew, idNameTabar;
+    private ImageButton btBack, idFavorite, idFavoriteTick;
     private RecyclerView recyclerView;
     private RecycleViewRoomApdater adapter;
     private RecycleViewRoomApdater.ItemListener itemListener;
     private List<Room> list;
     private List<ReviewHotel> listReview;
     private Context context;
-    private AppBarLayout appBarLayout;
-//    private CollapsingToolbarLayout collapsingToolbarLayout;
-//    private Toolbar toolbar;
     private boolean isExpanded = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +69,11 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         reviewStar = findViewById(R.id.reviewStar);
         idReview = findViewById(R.id.idReview);
         sumReivew = findViewById(R.id.sumReivew);
+        idNameTabar = findViewById(R.id.idNameTabar);
+        idFavorite = findViewById(R.id.idFavorite);
+        idFavoriteTick = findViewById(R.id.idFavoriteTick);
         getIntentItem();
         recyclerView = findViewById(R.id.recycleView);
-        appBarLayout = findViewById(R.id.appBarLayout);
-//        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
-//        toolbar = findViewById(R.id.toolBar);
         initToolBar();
         itemListener = this;
         context = this;
@@ -87,6 +84,22 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        idFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                idFavoriteTick.setVisibility(View.VISIBLE);
+                idFavorite.setVisibility(View.GONE);
+            }
+        });
+
+        idFavoriteTick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                idFavorite.setVisibility(View.VISIBLE);
+                idFavoriteTick.setVisibility(View.GONE);
             }
         });
     }
@@ -189,6 +202,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         phone.setText(hotel.getPhone());
         star.setText(hotel.getStar());
         title.setText(hotel.getName());
+        idNameTabar.setText(hotel.getName());
         address.setText(hotel.getAddress());
         tvMota.setText(hotel.getDescribe());
     }

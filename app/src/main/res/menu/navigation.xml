@@ -12,7 +12,7 @@
 
     <item android:id="@+id/mHistory"
         android:title="Lịch sử"
-        android:icon="@drawable/ic_baseline_change_history_24"
+        android:icon="@drawable/ic_baseline_history_24"
         />
 
     <item android:id="@+id/mAccount"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalAndroid</string>
+    <string name="app_name">ZoJoy</string>
     <string name="sale"> <strike>230000</strike> </string>
     <string-array name="gender">
         <item>Nữ</item>
