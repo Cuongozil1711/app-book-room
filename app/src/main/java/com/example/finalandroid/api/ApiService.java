@@ -1,12 +1,14 @@
 package com.example.finalandroid.api;
 
 import com.example.finalandroid.User;
+import com.example.finalandroid.dto.UserCodeDto;
 import com.example.finalandroid.dto.Userbean;
 import com.example.finalandroid.model.HistoryBookRoom;
 import com.example.finalandroid.model.Hotel;
 import com.example.finalandroid.model.ReviewHotel;
 import com.example.finalandroid.model.Room;
 import com.example.finalandroid.model.UserHotel;
+import com.example.finalandroid.model.UserHotelLike;
 import com.example.finalandroid.model.UserRoom;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +17,7 @@ import com.google.gson.internal.GsonBuildConfig;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -29,14 +32,32 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .setLenient()
             .create();
+
+    OkHttpClient client = new OkHttpClient();
 
     ApiService apiService = new Retrofit.Builder()
             .baseUrl("http://192.168.0.102:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService.class);
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build().create(ApiService.class);
+//
+//    Gson gson = new GsonBuilder()
+//            .setLenient()
+//            .create();
+//
+//    Retrofit apiService = new Retrofit.Builder()
+//            .baseUrl(BASE_URL)
+//            .client(client)
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build();
+//
+//    ApiService apiService = new Retrofit.Builder()
+//            .baseUrl("http://192.168.0.102:8080/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//            .create(ApiService.class);
 
 
 
@@ -44,7 +65,10 @@ public interface ApiService {
     Call<List<User>> getListUser();
 
     @GET("login")
-    Call<User> login(@Query("phone") String phone);
+    Call<UserCodeDto> login(@Query("phone") String phone);
+
+    @GET("checkSmsUser")
+    Call<User> checkSmsUser(@Query("otp") String otp, @Query("uiId") Integer uiId);
 
     @GET("getHotel")
     Call<List<Hotel>> getHotel();
@@ -79,4 +103,10 @@ public interface ApiService {
 
     @GET("listUserRoom")
     Call<List<UserRoom>> getListUserRoom(@Query("id") Integer id);
+
+    @GET("listUserLike")
+    Call<List<UserHotelLike>> listUserLike(@Query("idHotel") Integer idHotel);
+
+    @POST("updateUserLike")
+    Call<Integer> updateUserLike(@Body UserHotelLike userHotelLike);
 }

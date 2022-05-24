@@ -2,7 +2,6 @@ package com.example.finalandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.finalandroid.adapter.RecycleViewRoomApdater;
+import com.example.finalandroid.activity.BookRoom;
 import com.example.finalandroid.adapter.RecycleViewRoomDetailsApdater;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;

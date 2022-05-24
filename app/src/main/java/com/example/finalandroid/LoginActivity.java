@@ -13,17 +13,24 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.finalandroid.activity.authen.FaceBookAuthenActivity;
+import com.example.finalandroid.activity.authen.GoogleAuthenActivity;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.dal.SqliteHelper;
+import com.example.finalandroid.dto.UserCodeDto;
+import com.example.finalandroid.model.ReviewHotel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -38,6 +45,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -55,7 +63,10 @@ public class LoginActivity extends AppCompatActivity {
     private Context context;
     private ProgressDialogCustom progressDialogCustom;
     private SqliteHelper sql;
+    private ImageView btnLoginFace, btnLoginGoogle;
     private static final String TAG = LoginActivity.class.getName();
+    private final static int REQUEST_CODE_GOOGLE = 10000;
+    private final static int REQUEST_CODE_FACEBOOK = 10001;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
         btLogin = findViewById(R.id.btnLogin);
         btRegister = findViewById(R.id.btnRegister);
         progressBar = findViewById(R.id.progressBar);
+        btnLoginFace = findViewById(R.id.btnLoginFace);
+        btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
         context = this;
         FirebaseApp.initializeApp(/*context=*/ this);
         FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
@@ -90,102 +103,64 @@ public class LoginActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorChecked));
+
+        btnLoginFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, FaceBookAuthenActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FACEBOOK);
+            }
+        });
+
+        btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, GoogleAuthenActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_GOOGLE);
+            }
+        });
     }
 
     private void login(){
         phoneEdit = phone.getText().toString();
         progressDialogCustom.show();
-//        if(TextUtils.isEmpty(phoneEdit)){
-//            Toast.makeText(this, "Vui lòng nhập phone", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-        //phoneEdit = "+84 974886013";
-//        if(TextUtils.isEmpty(passEdit)){
-//            Toast.makeText(this, "Vui lòng nhập password", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        auth.signInWithEmailAndPassword(emailEdit, passEdit).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                progressBar.setVisibility(View.GONE);
-//                if(task.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(i);
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(), "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-
-//        SMS
-//        PhoneAuthOptions options =
-//                PhoneAuthOptions.newBuilder(auth)
-//                        .setPhoneNumber("+84 528129662")       // Phone number to verify
-//                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-//                        .setActivity(this)                 // Activity (for callback binding)
-//                        .setCallbacks(
-//                            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//                            @Override
-//                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//                                progressBar.setVisibility(View.GONE);
-//                                progressDialogCustom.hide();
-//                                signInWithPhoneAuthCredential(phoneAuthCredential);
-//                            }
-//
-//                            @Override
-//                            public void onVerificationFailed(@NonNull FirebaseException e) {
-//                                progressBar.setVisibility(View.GONE);
-//                                progressDialogCustom.hide();
-//                                Toast.makeText(getApplicationContext(), "The verification failed", Toast.LENGTH_SHORT).show();
-//                            }
-//
-//                            @Override
-//                            public void onCodeSent(@NonNull String verfyID, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-//                                super.onCodeSent(verfyID, forceResendingToken);
-//                                progressBar.setVisibility(View.GONE);
-//                                progressDialogCustom.hide();
-//                                goToEnterActivity(phoneEdit, verfyID);
-//                            }
-//                        }
-//                        )          // OnVerificationStateChangedCallbacks
-//                        .build();
-//        PhoneAuthProvider.verifyPhoneNumber(options);
-        loginToServer("0528129662");
+        if(TextUtils.isEmpty(phoneEdit)){
+            Toast.makeText(this, "Vui lòng nhập phone", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        loginToServer(phoneEdit);
     }
 
     public void loginToServer(String phone){
         progressDialogCustom.show();
-        ApiService.apiService.login(phone).enqueue(new Callback<User>() {
+        ApiService.apiService.login(phone).enqueue(new Callback<UserCodeDto>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserCodeDto> call, Response<UserCodeDto> response) {
                 progressDialogCustom.hide();
-                userLogin = response.body();
-                SqliteHelper db = new SqliteHelper(context);
+                    UserCodeDto userCodeDto = response.body();
+                    SqliteHelper db = new SqliteHelper(context);
+                    List<User> listUser = db.getAllUser();
+                    for(User us: listUser){
+                        db.delete(us.getId());
+                    }
 
-                User user = db.getUser();
-                if(user != null)
-                db.delete(user.getId());
-
-                db.addItem(userLogin);
-                if(userLogin != null){
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    i.putExtra("user", userLogin);
-                    startActivity(i);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
-                }
+                    if(userCodeDto != null){
+                        Intent i = new Intent(LoginActivity.this, EnterOtpActivity.class);
+                        i.putExtra("userCodeDto", userCodeDto);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+                    }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserCodeDto> call, Throwable t) {
                 progressDialogCustom.hide();
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void goToEnterActivity(String phoneNumber, String verfyID){
@@ -230,5 +205,17 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(userLogin != null) return;
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_GOOGLE && resultCode == RESULT_OK) {
+            finish();
+        } else if (requestCode == REQUEST_CODE_FACEBOOK && resultCode == RESULT_OK) {
+            finish();
+        } else {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -81,6 +81,27 @@ public class SqliteHelper extends SQLiteOpenHelper {
         else return null;
     }
 
+    public List<User> getAllUser(){
+        List<User> list = new ArrayList<>();
+        SQLiteDatabase st = getReadableDatabase();
+        Cursor rs = st.query("userTable", null, null, null, null, null,
+                null);
+        while(rs != null && rs.moveToNext()){
+            int id = rs.getInt(0);
+            String email = rs.getString(1);
+            String name = rs.getString(2);
+            String password = rs.getString(3);
+            String phone = rs.getString(4);
+            String age = rs.getString(5);
+            String address = rs.getString(6);
+            String typeLogin = rs.getString(7);
+            String gender = rs.getString(8);
+            String image = rs.getString(9);
+            list.add(new User(id, email, name, password, phone, age, address, typeLogin, gender, image));
+        }
+        return list;
+    }
+
     public int delete(int id){
         ContentValues values = new ContentValues();
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();

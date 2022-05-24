@@ -15,17 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalandroid.BookRoom;
+import com.example.finalandroid.activity.BookRoom;
 import com.example.finalandroid.R;
 import com.example.finalandroid.User;
-import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
 import com.example.finalandroid.adapter.RecyleViewHistoryAdapter;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.model.HistoryBookRoom;
-import com.example.finalandroid.model.Hotel;
-import com.example.finalandroid.model.Room;
 
 import java.util.List;
 

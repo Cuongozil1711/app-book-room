@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.finalandroid.ConfirmBookRoom;
+import com.example.finalandroid.R;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
 import com.example.finalandroid.model.BookRoomOfUser;

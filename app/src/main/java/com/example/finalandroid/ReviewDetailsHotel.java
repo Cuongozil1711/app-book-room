@@ -32,7 +32,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewDetailsHotel extends AppCompatActivity {
-
     private ImageView tvImage;
     private RatingBar ratingBa45;
     private TextView reviewHotel;
@@ -40,7 +39,6 @@ public class ReviewDetailsHotel extends AppCompatActivity {
     private Button btnReview;
     private User user;
     private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,30 +16,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalandroid.BookRoom;
 import com.example.finalandroid.ItemHotelAcivity;
 import com.example.finalandroid.R;
 import com.example.finalandroid.SearchHotelActivity;
 import com.example.finalandroid.SearchProvince;
-import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
 import com.example.finalandroid.adapter.RecycleViewHotelHomeAdapter;
 import com.example.finalandroid.adapter.RecycleViewHotelHomeStarAdapter;
-import com.example.finalandroid.adapter.RecycleViewKeySearchAdapter;
-import com.example.finalandroid.adapter.RecycleViewRoomApdater;
-import com.example.finalandroid.api.ApiService;
-import com.example.finalandroid.custom.ProgressDialogCustom;
-import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.dal.SqliteHelperHotel;
 import com.example.finalandroid.model.Hotel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FragmentHome extends Fragment implements RecycleViewHotelHomeAdapter.ItemListener, RecycleViewHotelHomeStarAdapter.ItemListener{
 

@@ -5,4 +5,7 @@
         <item>Nữ</item>
         <item>Nam</item>
     </string-array>
+    <string name="facebook_app_id">1413170035772848</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">1413170035772848|jlZHTYwXShGzZ5jx0N4XlSNTQ8M</string>
 </resources>
