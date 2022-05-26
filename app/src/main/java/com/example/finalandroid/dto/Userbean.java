@@ -1,6 +1,6 @@
 package com.example.finalandroid.dto;
 
-import com.example.finalandroid.User;
+import com.example.finalandroid.model.User;
 
 import java.io.Serializable;
 

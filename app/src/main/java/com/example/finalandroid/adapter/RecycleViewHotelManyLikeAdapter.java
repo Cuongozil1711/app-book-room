@@ -16,15 +16,15 @@ import com.example.finalandroid.model.Hotel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewHotelAdapter extends RecyclerView.Adapter<RecycleViewHotelAdapter.HotelViewHolder>{
+public class RecycleViewHotelManyLikeAdapter extends RecyclerView.Adapter<RecycleViewHotelManyLikeAdapter.HotelViewHolder>{
     private List<Hotel> mList;
-    private ItemListener itemListener;
+    private RecycleViewHotelManyLikeAdapter.ItemListener itemListener;
 
-    public RecycleViewHotelAdapter() {
+    public RecycleViewHotelManyLikeAdapter() {
         mList = new ArrayList<>();
     }
 
-    public void setItemListener(ItemListener itemListener) {
+    public void setItemListener(RecycleViewHotelManyLikeAdapter.ItemListener itemListener) {
         this.itemListener = itemListener;
     }
 
@@ -39,13 +39,13 @@ public class RecycleViewHotelAdapter extends RecyclerView.Adapter<RecycleViewHot
 
     @NonNull
     @Override
-    public HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecycleViewHotelManyLikeAdapter.HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        return new HotelViewHolder(view);
+        return new RecycleViewHotelManyLikeAdapter.HotelViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecycleViewHotelManyLikeAdapter.HotelViewHolder holder, int position) {
         Hotel hotel = mList.get(position);
         new ConfigGetData(holder.img)
                 .execute(hotel.getImage());
@@ -59,7 +59,7 @@ public class RecycleViewHotelAdapter extends RecyclerView.Adapter<RecycleViewHot
     @Override
     public int getItemCount() {
         if(mList != null)
-        return mList.size();
+            return mList.size();
         else return 0;
     }
 
@@ -80,12 +80,12 @@ public class RecycleViewHotelAdapter extends RecyclerView.Adapter<RecycleViewHot
         @Override
         public void onClick(View view) {
             if(itemListener != null){
-                itemListener.onItemClick(view, getAdapterPosition());
+                itemListener.onItemClickHotelLike(view, getAdapterPosition());
             }
         }
     }
 
     public interface ItemListener{
-        void onItemClick(View view, int position);
+        void onItemClickHotelLike(View view, int position);
     }
 }

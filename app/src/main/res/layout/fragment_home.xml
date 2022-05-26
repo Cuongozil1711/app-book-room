@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
+        android:paddingHorizontal="5dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -111,13 +112,6 @@
                 android:layout_marginTop="5dp"
             />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/imageSlider"
-                android:src="@drawable/img"
-            />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +130,7 @@
                         android:textSize="18dp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Khách sạn gần bạn"/>
+                        android:text="KHÁCH SẠN GẦN BẠN"/>
 
                 </LinearLayout>
 
@@ -152,6 +146,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="KHÁCH SẠN NHIỀU LƯỢT THÍCH"/>
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleViewLike"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
@@ -167,7 +192,7 @@
                         android:textSize="18dp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Đánh giá cao nhất"/>
+                        android:text="ĐÁNH GIÁ CAO NHẤT"/>
 
                 </LinearLayout>
 
@@ -180,11 +205,12 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -198,7 +224,7 @@
                         android:textSize="18dp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Thống kê"/>
+                        android:text="THỐNG KÊ"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -207,29 +233,70 @@
                         android:background="@color/colorDivider"/>
 
 
-                    <TextView
-                        android:id="@+id/tvlistHotel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="56 khách sạn"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16dp"
-                        android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/ic_baseline_home_24"
+                            android:text="5.8"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/tvlistHotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="56 khách sạn"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textSize="16dp"
-                        android:id="@+id/tvlistStar"
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="normal"
-                        android:text="56 đánh giá tốt"/>
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:src="@drawable/ic_baseline_reviews_24"
+                            android:text="5.8"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="16dp"
+                            android:id="@+id/tvlistStar"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="normal"
+                            android:text="56 đánh giá tốt"/>
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
-
 
 
 
@@ -245,7 +312,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tiện ích"
+                    android:text="TIỆN ÍCH"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />

@@ -1,13 +1,18 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.review;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.finalandroid.R;
+import com.example.finalandroid.activity.hotel.ItemHotelAcivity;
 import com.example.finalandroid.adapter.RecycleViewRoomApdater;
 import com.example.finalandroid.adapter.RecycleViewRoomDetailsApdater;
 import com.example.finalandroid.adapter.RevycleViewReviewHotelAdapter;
@@ -30,6 +35,7 @@ public class ListReview extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RevycleViewReviewHotelAdapter adapter;
     private List<ReviewHotel> listReview;
+    private ImageButton btBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,15 @@ public class ListReview extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_list_review);
         recyclerView = findViewById(R.id.recycleView);
+        btBack = findViewById(R.id.btBack);
+
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListReview.this, ItemHotelAcivity.class);
+                startActivity(intent);
+            }
+        });
         getIntentItem();
         getListReview();
     }

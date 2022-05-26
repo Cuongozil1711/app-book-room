@@ -1,5 +1,6 @@
 package com.example.finalandroid.activity.authen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -7,8 +8,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.finalandroid.LoginActivity;
+import com.example.finalandroid.Common.Common;
+import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
+import com.example.finalandroid.dal.SqliteHelper;
+import com.example.finalandroid.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +27,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class GoogleAuthenActivity extends LoginActivity {
     private static final int RC_SIGN_IN = 100;
     private GoogleSignInClient mGoogleSignInClient;
@@ -30,6 +40,7 @@ public class GoogleAuthenActivity extends LoginActivity {
     private FirebaseUser mUser;
     private ProgressDialogCustom progressDialog;
     private Intent intent = new Intent();
+    private Context context;
 
 
     @Override
@@ -38,6 +49,7 @@ public class GoogleAuthenActivity extends LoginActivity {
 
         progressDialog = new ProgressDialogCustom(this);
         progressDialog.show();
+        context = this;
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -95,9 +107,43 @@ public class GoogleAuthenActivity extends LoginActivity {
     }
 
     private void success() {
-        String response = mUser.getUid() + mUser.getDisplayName() + mUser.getPhotoUrl().toString();
-        setResult(RESULT_OK, intent);
-        finish();
+        User user = new User();
+        user.setAccessToken(null);
+        user.setUuId(mUser.getUid());
+        user.setName(mUser.getDisplayName());
+        user.setImage(mUser.getPhotoUrl().toString());
+        user.setPhone(mUser.getPhoneNumber());
+        user.setEmail(mUser.getEmail());
+        user.setTypeLogin(Common.TYPE_LOGIN.TYPE_GOOGLE);
+
+        ApiService.apiService.loginFaceOrGoogle(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.body() != null){
+                    SqliteHelper db = new SqliteHelper(context);
+                    List<User> listUser = db.getAllUser();
+                    for(User us: listUser){
+                        db.delete(us.getId());
+                    }
+                    User user1 = response.body();
+                    db.addItem(user1);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(GoogleAuthenActivity.this, "Không thể đăng nhập", Toast.LENGTH_SHORT).show();
+                    error();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(GoogleAuthenActivity.this, "Không thể đăng nhập", Toast.LENGTH_SHORT).show();
+                error();
+            }
+        });
+
+
     }
 
     private void error() {

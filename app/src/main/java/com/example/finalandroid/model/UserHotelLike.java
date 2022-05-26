@@ -6,14 +6,16 @@ public class UserHotelLike implements Serializable {
     private Integer id;
     private String userLike;
     private Integer idUser;
+    private Integer idHotel;
 
     public UserHotelLike() {
     }
 
-    public UserHotelLike(Integer id, String userLike, Integer idUser) {
+    public UserHotelLike(Integer id, String userLike, Integer idUser, Integer idHotel) {
         this.id = id;
         this.userLike = userLike;
         this.idUser = idUser;
+        this.idHotel = idHotel;
     }
 
     public Integer getId() {
@@ -38,5 +40,13 @@ public class UserHotelLike implements Serializable {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
+    }
+
+    public Integer getIdHotel() {
+        return idHotel;
+    }
+
+    public void setIdHotel(Integer idHotel) {
+        this.idHotel = idHotel;
     }
 }

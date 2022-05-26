@@ -42,7 +42,6 @@ public class SqlSearch extends SQLiteOpenHelper {
 
     public long addSearch(NameSearch i){
         ContentValues values = new ContentValues();
-        values.put("id", i.getId());
         values.put("nameSearch", i.getNameSearch());
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         return sqLiteDatabase.insert("searchHotel", null, values);

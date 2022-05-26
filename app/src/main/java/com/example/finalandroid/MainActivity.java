@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.finalandroid.adapter.ViewPaperAdapter;
 import com.example.finalandroid.api.ApiService;
+import com.example.finalandroid.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         unitBottomLayout();
         mList = new ArrayList<>();
         textView = findViewById(R.id.textView);
-        Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra("user");
-        //textView.setText(user.getName());
-        //getListUsers();
     }
 
     private void unitBottomLayout() {
@@ -109,20 +106,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getListUsers() {
-        ApiService.apiService.getListUser().enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                mList = response.body();
-                textView.setText(mList.get(0).getName());
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public boolean onKeyDown(int key_code, KeyEvent key_event) {

@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:text="Bạn chưa có tài khoản ?"
                 android:textColor="#595757"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 android:textSize="14dp"/>
 
             <TextView
@@ -195,7 +195,21 @@
                 android:textColor="@color/colorChecked"
                 android:textSize="14dp" />
 
+
+            <TextView
+                android:id="@+id/btIgnore"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:clickable="true"
+                android:enabled="true"
+                android:onClick="register"
+                android:text="@string/your_string_here"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 

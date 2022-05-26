@@ -7,10 +7,68 @@
 >
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="left"
+        android:id="@+id/noUserLogin"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:ellipsize="end"
+                android:text="Đăng ký ngay để nhận nhiều ưu đãi hấp dẫn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đăng nhập/"
+                android:textColor="@color/colorChecked"
+                android:textSize="22dp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Đăng ký"
+                android:textColor="@color/colorChecked"
+                android:textSize="22dp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left"
+        android:id="@+id/userLogin"
         android:orientation="vertical"
         android:paddingHorizontal="15dp"
         android:paddingVertical="5dp"
@@ -27,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="User1"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="25dp"
                 android:textStyle="bold" />
@@ -96,6 +155,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/pageUser"
                 android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,7 +184,8 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginTop="25dp"
-                        android:text="Đặt phòng của tôi"
+                        android:id="@+id/hotelLove"
+                        android:text="Khách sạn yêu thích"
                         android:textStyle="normal"
                         android:textSize="16dp"/>
 
@@ -375,6 +436,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:id="@+id/btSignOut"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"

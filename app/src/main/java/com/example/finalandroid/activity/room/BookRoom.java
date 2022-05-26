@@ -1,6 +1,5 @@
-package com.example.finalandroid.activity;
+package com.example.finalandroid.activity.room;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -9,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,16 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.finalandroid.ConfirmBookRoom;
 import com.example.finalandroid.R;
+import com.example.finalandroid.activity.authen.LoginActivity;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
+import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.model.BookRoomOfUser;
 import com.example.finalandroid.model.Hotel;
 import com.example.finalandroid.model.Room;
+import com.example.finalandroid.model.User;
 import com.example.finalandroid.model.UserRoom;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +48,8 @@ public class BookRoom extends AppCompatActivity {
     private Hotel hotel;
     private Button btnBookRoom;
     private Context context;
+    private User user;
+    private SqliteHelper sqliteHelper;
 
 
     @Override
@@ -58,19 +59,27 @@ public class BookRoom extends AppCompatActivity {
         context = this;
         initView();
         getIntentView();
+        sqliteHelper = new SqliteHelper(this);
+        user = sqliteHelper.getUser();
         btnBookRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isTime = checkTime();
-                if(isTime){
-                    Intent intent = new Intent(context, ConfirmBookRoom.class);
-                    BookRoomOfUser roomOfUser = new BookRoomOfUser(timeNhan.getText().toString(), timeTra.getText().toString());
-                    intent.putExtra("hotel", hotel);
-                    intent.putExtra("roomOfUser", roomOfUser);
-                    intent.putExtra("room", room);
+                if(user == null){
+                    Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                 }
+                else{
+                    boolean isTime = checkTime();
+                    if(isTime){
+                        Intent intent = new Intent(context, ConfirmBookRoom.class);
+                        BookRoomOfUser roomOfUser = new BookRoomOfUser(timeNhan.getText().toString(), timeTra.getText().toString());
+                        intent.putExtra("hotel", hotel);
+                        intent.putExtra("roomOfUser", roomOfUser);
+                        intent.putExtra("room", room);
+                        startActivity(intent);
+                    }
 
+                }
             }
 
         });

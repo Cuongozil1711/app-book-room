@@ -5,7 +5,10 @@
         <item>Nữ</item>
         <item>Nam</item>
     </string-array>
+    <string name="your_string_here">
+        <u>bỏ qua</u>.
+    </string>
     <string name="facebook_app_id">1413170035772848</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">1413170035772848|jlZHTYwXShGzZ5jx0N4XlSNTQ8M</string>
+    <string name="facebook_client_token">097446b824492393c74c920a8fd0f322</string>
 </resources>

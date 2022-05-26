@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ReviewDetailsHotel">
+    tools:context=".activity.review.ReviewDetailsHotel">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorStarBar"
+        android:background="@color/white"
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
         android:orientation="horizontal">
@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:id="@+id/btBack"
             android:outlineAmbientShadowColor="@color/white"
-            android:background="@color/colorStarBar"
+            android:background="@color/white"
             />
 
         <TextView

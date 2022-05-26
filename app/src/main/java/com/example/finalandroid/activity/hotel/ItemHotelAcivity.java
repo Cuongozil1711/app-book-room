@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.hotel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.finalandroid.activity.BookRoom;
+import com.example.finalandroid.activity.review.ListReview;
+import com.example.finalandroid.R;
+import com.example.finalandroid.activity.room.BookRoom;
+import com.example.finalandroid.activity.room.ListRoomOfHotel;
 import com.example.finalandroid.adapter.RecycleViewRoomApdater;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
@@ -25,6 +29,7 @@ import com.example.finalandroid.fragment.FragmentBook;
 import com.example.finalandroid.model.Hotel;
 import com.example.finalandroid.model.ReviewHotel;
 import com.example.finalandroid.model.Room;
+import com.example.finalandroid.model.User;
 import com.example.finalandroid.model.UserHotelLike;
 
 import java.util.List;
@@ -34,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRoomApdater.ItemListener{
-
     private Hotel hotel;
     private ImageView imageHotel;
     private TextView phone, star, title, address, tvMota, nameReview, dayReview, reviewStar, idReview, sumReivew, idNameTabar;
@@ -49,6 +53,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
     private SqliteHelper sqliteHelper;
     private User user;
     private UserHotelLike userHotelLike;
+    private LinearLayout llReview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         idNameTabar = findViewById(R.id.idNameTabar);
         idFavorite = findViewById(R.id.idFavorite);
         idFavoriteTick = findViewById(R.id.idFavoriteTick);
+        llReview = (LinearLayout) findViewById(R.id.llReview);
         sqliteHelper = new SqliteHelper(this);
         user = sqliteHelper.getUser();
         getIntentItem();
@@ -77,6 +83,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         getListRoom();
         getListReview();
         getListUserLike();
+
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,12 +113,14 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
 
     private void updateUserLikeHotel(String s) {
         if(userHotelLike != null){
+            userHotelLike.setIdHotel(hotel.getId());
             userHotelLike.setUserLike(s);
         }
         else{
             userHotelLike = new UserHotelLike();
+            userHotelLike.setIdHotel(hotel.getId());
             userHotelLike.setUserLike(s);
-            userHotelLike.setIdUser(user.getId());
+            userHotelLike.setIdUser(user == null ? null : user.getId());
         }
         ApiService.apiService.updateUserLike(userHotelLike).enqueue(new Callback<Integer>() {
             @Override
@@ -133,7 +142,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
                 if(response.body() != null){
                     hotelLikes = response.body();
                     String isLike = "0";
-                    if(hotelLikes.size() > 0){
+                    if(hotelLikes.size() > 0 && user != null){
                         for(UserHotelLike item : hotelLikes){
                             if(item.getIdUser() == user.getId()){
                                 isLike = item.getUserLike();
@@ -175,6 +184,9 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
                         dayReview.setText(listReview.get(0).getDayReview());
                         reviewStar.setText(listReview.get(0).getReviewStar());
                         sumReivew.setText(String.valueOf(listReview.size()));
+                    }
+                    else{
+                        llReview.setVisibility(View.GONE);
                     }
                 }
             }

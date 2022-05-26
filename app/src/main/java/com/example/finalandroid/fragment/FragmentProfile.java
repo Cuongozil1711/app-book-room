@@ -12,22 +12,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.finalandroid.EditUserActivity;
-import com.example.finalandroid.LoginActivity;
+import com.example.finalandroid.activity.authen.RegisterActivity;
+import com.example.finalandroid.activity.hotel.UserHotelLove;
+import com.example.finalandroid.activity.user.EditUserActivity;
+import com.example.finalandroid.activity.authen.LoginActivity;
 import com.example.finalandroid.R;
-import com.example.finalandroid.RegisterActivity;
-import com.example.finalandroid.ReviewHotelAcitivity;
-import com.example.finalandroid.User;
+import com.example.finalandroid.activity.review.ReviewHotelAcitivity;
+import com.example.finalandroid.model.User;
 import com.example.finalandroid.dal.SqliteHelper;
 
 public class FragmentProfile extends Fragment{
 
     private User user;
     private SqliteHelper sqliteHelper;
-    private TextView txName, txMail, txPhone, reviewHotel;
+    private TextView txName, txMail, txPhone, reviewHotel, btLogin, btnRegister, hotelLove;
     private ImageButton editUser;
     private Button idSignOut;
     @Nullable
@@ -47,17 +47,45 @@ public class FragmentProfile extends Fragment{
         //idSignOut = view.findViewById(R.id.idSignOut);
         editUser = view.findViewById(R.id.btEdit);
         reviewHotel = view.findViewById(R.id.reviewHotel);
+        hotelLove = view.findViewById(R.id.hotelLove);
+        reviewHotel = view.findViewById(R.id.reviewHotel);
+        btLogin = view.findViewById(R.id.btLogin);
+        btnRegister = view.findViewById(R.id.btnRegister);
+        LinearLayout pageUser = (LinearLayout)  view.findViewById(R.id.pageUser);
+        LinearLayout userLogin = (LinearLayout)  view.findViewById(R.id.userLogin);
+        LinearLayout noUserLogin = (LinearLayout)  view.findViewById(R.id.noUserLogin);
+        LinearLayout btSignOut = (LinearLayout)  view.findViewById(R.id.btSignOut);
         if(user != null){
             txName.setText(user.getName());
             txMail.setText(user.getEmail());
             txPhone.setText(user.getPhone());
+            userLogin.setVisibility(View.VISIBLE);
+            noUserLogin.setVisibility(View.GONE);
         }
-//        idSignOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                signOut();
-//            }
-//        });
+        else{
+            pageUser.setVisibility(View.GONE);
+            userLogin.setVisibility(View.GONE);
+            noUserLogin.setVisibility(View.VISIBLE);
+            btSignOut.setVisibility(View.GONE);
+        }
+
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity().getApplication() , LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity().getApplication() , RegisterActivity.class);
+                startActivity(i);
+            }
+        });
+
+
 
         editUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +99,14 @@ public class FragmentProfile extends Fragment{
             @Override
             public void onClick(View view) {
                 reviewHotelOf(view);
+            }
+        });
+
+        hotelLove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity().getApplication() , UserHotelLove.class);
+                startActivity(i);
             }
         });
 

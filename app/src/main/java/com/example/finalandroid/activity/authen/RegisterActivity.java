@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.authen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,15 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalandroid.R;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.dal.SqliteHelper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.finalandroid.dto.UserCodeDto;
+import com.example.finalandroid.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
@@ -99,29 +98,27 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void callApiRegister(String phone, String name) {
         progressDialogCustom.show();
-        ApiService.apiService.registerUser(phone, name).enqueue(new Callback<User>() {
+        ApiService.apiService.registerUser(phone, name).enqueue(new Callback<UserCodeDto>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserCodeDto> call, Response<UserCodeDto> response) {
                 progressDialogCustom.hide();
-                userLogin = response.body();
+                UserCodeDto userCodeDto = response.body();
                 SqliteHelper db = new SqliteHelper(context);
 
                 User user = db.getUser();
                 if(user != null)
-                db.delete(user.getId());
-
-                db.addItem(userLogin);
-                if(userLogin != null){
-                    Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-                    i.putExtra("user", userLogin);
-                    startActivity(i);
+                    db.delete(user.getId());
+                if(userCodeDto == null){
+                    Toast.makeText(getApplicationContext(), "Số điện thoại này đã được đăng ký", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(RegisterActivity.this, EnterOtpActivity.class);
+                    i.putExtra("userCodeDto", userCodeDto);
+                    startActivity(i);
                 }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserCodeDto> call, Throwable t) {
                 progressDialogCustom.hide();
                 Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
             }

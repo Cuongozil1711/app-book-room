@@ -15,9 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalandroid.activity.BookRoom;
+import com.example.finalandroid.activity.authen.LoginActivity;
+import com.example.finalandroid.activity.room.BookRoom;
 import com.example.finalandroid.R;
-import com.example.finalandroid.User;
+import com.example.finalandroid.model.User;
 import com.example.finalandroid.adapter.RecyleViewHistoryAdapter;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
@@ -36,7 +37,7 @@ public class FragmentHistory extends Fragment implements RecyleViewHistoryAdapte
     private SqliteHelper sqliteHelper;
     private List<HistoryBookRoom> bookRoomList;
     private Context context;
-    private TextView mHistory;
+    private TextView mHistory, btnOrder;
 
     private RecyclerView recyclerView;
     private RecyleViewHistoryAdapter adapter;
@@ -50,26 +51,47 @@ public class FragmentHistory extends Fragment implements RecyleViewHistoryAdapte
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         sqliteHelper = new SqliteHelper(view.getContext());
         user = sqliteHelper.getUser();
         context = getActivity();
         mHistory = view.findViewById(R.id.mHistory);
         recyclerView = view.findViewById(R.id.recycleView);
+        btnOrder = view.findViewById(R.id.btnOrder);
         itemListener = this;
+        if(user == null){
+            btnOrder.setVisibility(View.VISIBLE);
+            btnOrder.setText("Đăng nhập ngay để nhận nhiều ưu đãi hấp dẫn");
+        }
+        if(user != null)
         getListHistoryBookRoom();
+
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user == null){
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void getListHistoryBookRoom(){
         ProgressDialogCustom progressDialogCustom = new ProgressDialogCustom(context);
         progressDialogCustom.show();
-        ApiService.apiService.getHistoryBook(Integer.valueOf(user.getId()), "0").enqueue(new Callback<List<HistoryBookRoom>>() {
+        ApiService.apiService.getHistoryBook(Integer.valueOf(user.getId()), "0", user.getAccessToken()).enqueue(new Callback<List<HistoryBookRoom>>() {
             @Override
             public void onResponse(Call<List<HistoryBookRoom>> call, Response<List<HistoryBookRoom>> response) {
                 progressDialogCustom.hide();
                 bookRoomList = response.body();
-                if(bookRoomList != null) mHistory.setText("Lịch sử đặt phòng");
-                else mHistory.setText("Bạn chưa có lịch sử nào");
+                if(bookRoomList != null){
+                    mHistory.setText("Lịch sử đặt phòng");
+                    btnOrder.setVisibility(View.GONE);
+                }
+                else{
+                    mHistory.setText("Bạn chưa có lịch sử nào");
+                    btnOrder.setVisibility(View.VISIBLE);
+                }
 
                 adapter = new RecyleViewHistoryAdapter(context);
                 adapter.setmList(bookRoomList);

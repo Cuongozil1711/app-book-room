@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.example.finalandroid.R;
 import com.example.finalandroid.adapter.RecycleViewResultSearchAdapter;
 import com.example.finalandroid.adapter.RecycleViewSelectProvinceAdapter;
 import com.example.finalandroid.fragment.FragmentHome;

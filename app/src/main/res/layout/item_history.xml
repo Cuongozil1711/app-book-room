@@ -87,7 +87,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/btnLogin"
+                android:id="@+id/btDelete"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -95,7 +95,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:background="@drawable/ic_custom_button"
-                android:text="Xem phòng"
+                android:text="Hủy"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

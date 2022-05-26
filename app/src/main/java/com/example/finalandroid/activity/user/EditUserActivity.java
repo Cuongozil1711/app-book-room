@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.user;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -21,16 +21,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.finalandroid.R;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ConfigGetData;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.custom.RealPathUtil;
 import com.example.finalandroid.dal.SqliteHelper;
+import com.example.finalandroid.model.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,21 +48,20 @@ import retrofit2.Response;
 
 public class EditUserActivity extends AppCompatActivity{
 
-    private static final int MY_REQUEST_CODE = 10;
+    private static final int MY_REQUEST_CODE = 100;
     private TextView idPhone;
     private EditText idName, idEmail, eEdit;
     private RadioButton radio_nam, radio_nu;
     private ImageView profile_image;
-    private Bitmap bitmap;
     private Button btUpdate;
     private boolean checkChangeImage = false;
-    private final int SELECT_PICTURE = 1;
     private ProgressDialogCustom progressDialogCustom;
     private MultipartBody.Part multipartBody;
     private Uri uriData;
     private Context context;
     private SqliteHelper sq;
     private User user;
+    private ImageButton btBack;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -99,6 +101,7 @@ public class EditUserActivity extends AppCompatActivity{
         radio_nu = findViewById(R.id.radio_nu);
         profile_image = findViewById(R.id.profile_image);
         btUpdate = findViewById(R.id.btUpdate);
+        btBack = findViewById(R.id.btBack);
         sq = new SqliteHelper(this);
         context = this;
         progressDialogCustom = new ProgressDialogCustom(this);
@@ -124,6 +127,13 @@ public class EditUserActivity extends AppCompatActivity{
                     }
                 }, year, month, day);
                 dialog.show();
+            }
+        });
+
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 
@@ -153,7 +163,7 @@ public class EditUserActivity extends AppCompatActivity{
                         RequestBody requestBodyImage = RequestBody.create(MediaType.parse("*/*"), file);
                         multipartBody = MultipartBody.Part.createFormData("file", file.getName(), requestBodyImage);
                     }
-                    ApiService.apiService.updateUser(multipartBody, Integer.valueOf(user.getId()), user.getPhone(), user.getEmail(), user.getAge(), user.getGener()).enqueue(new Callback<User>() {
+                    ApiService.apiService.updateUser(multipartBody, Integer.valueOf(user.getId()), user.getPhone(), user.getEmail(), user.getAge(), user.getGener(), user.getAccessToken()).enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             progressDialogCustom.hide();
@@ -184,15 +194,17 @@ public class EditUserActivity extends AppCompatActivity{
             idName.setText(user.getName());
             idEmail.setText(user.getEmail());
             eEdit.setText(user.getAge());
-            if(user.getGener().equals("Nam")){
-                radio_nam.setSelected(true);
-            }
+            if(user.getGener() == null)  radio_nam.setSelected(true);
             else{
-                radio_nu.setSelected(true);
+                if(user.getGener().equals("Nam")){
+                    radio_nam.setSelected(true);
+                }
+                else{
+                    radio_nu.setSelected(true);
+                }
             }
 
             if (user.getImage() != null) {
-                //setExistImage(profile_image, user.getImage());
                 new ConfigGetData(profile_image)
                         .execute(user.getImage());
             }
@@ -229,6 +241,11 @@ public class EditUserActivity extends AppCompatActivity{
                 openGallery();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.hotel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
+import com.example.finalandroid.R;
+import com.example.finalandroid.activity.hotel.ItemHotelAcivity;
 import com.example.finalandroid.adapter.RecycleViewKeySearchAdapter;
 import com.example.finalandroid.adapter.RecycleViewResultSearchAdapter;
 import com.example.finalandroid.dal.SqlSearch;
@@ -22,7 +23,6 @@ import com.example.finalandroid.dal.SqliteHelperHotel;
 import com.example.finalandroid.model.Hotel;
 import com.example.finalandroid.model.NameSearch;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchHotelActivity extends AppCompatActivity implements RecycleViewResultSearchAdapter.ItemListener{

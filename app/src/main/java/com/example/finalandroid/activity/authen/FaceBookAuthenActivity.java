@@ -1,13 +1,17 @@
 package com.example.finalandroid.activity.authen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.finalandroid.LoginActivity;
+import com.example.finalandroid.Common.Common;
+import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
+import com.example.finalandroid.dal.SqliteHelper;
+import com.example.finalandroid.model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -25,6 +29,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FaceBookAuthenActivity extends LoginActivity {
     private CallbackManager callbackManager;
@@ -32,13 +41,13 @@ public class FaceBookAuthenActivity extends LoginActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private Intent intent = new Intent();
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
-
+        context = this;
         progressDialog = new ProgressDialogCustom(this);
         progressDialog.show();
 
@@ -101,25 +110,43 @@ public class FaceBookAuthenActivity extends LoginActivity {
     }
 
     private void success() {
-//        SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
-//        User user = new User(mUser.getUid(), mUser.getDisplayName(), mUser.getPhotoUrl().toString(), null);
-//        sqLiteHelper.addUser(user);
-//        MainActivity.user = user;
-//        ApiService.apiService.createdUser(mUser.getUid(), user.getFullname(), user.getUrlImg(), user.getIdAuthor()).enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                if (response.code() != 200) {
-//                    Toast.makeText(FacebookSignInActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                Toast.makeText(FacebookSignInActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        setResult(RESULT_OK, intent);
-        finish();
+        User user = new User();
+        user.setAccessToken(null);
+        user.setUuId(mUser.getUid());
+        user.setName(mUser.getDisplayName());
+        user.setImage(mUser.getPhotoUrl().toString());
+        user.setPhone(mUser.getPhoneNumber());
+        user.setEmail(mUser.getEmail());
+        user.setTypeLogin(Common.TYPE_LOGIN.TYPE_FACE);
+
+        ApiService.apiService.loginFaceOrGoogle(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.body() != null){
+                    SqliteHelper db = new SqliteHelper(context);
+                    List<User> listUser = db.getAllUser();
+                    for(User us: listUser){
+                        db.delete(us.getId());
+                    }
+                    User user1 = response.body();
+                    db.addItem(user1);
+
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else{
+                    error();
+                    Toast.makeText(FaceBookAuthenActivity.this, "Không thể đăng nhập", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                error();
+                Toast.makeText(FaceBookAuthenActivity.this, "Không thể đăng nhập", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void error() {

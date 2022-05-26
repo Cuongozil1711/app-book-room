@@ -1,28 +1,21 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.authen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.finalandroid.MainActivity;
+import com.example.finalandroid.R;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.dto.UserCodeDto;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
+import com.example.finalandroid.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +48,7 @@ public class EnterOtpActivity extends AppCompatActivity {
 
     private void onClickSendOtp(String otp) {
         if(otpEdit.getText().toString().length() > 0){
-            ApiService.apiService.checkSmsUser(otpEdit.getText().toString(),userCodeDto.getUiId()).enqueue(new Callback<User>() {
+            ApiService.apiService.checkSmsUser(otp,userCodeDto.getUiId()).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     user = response.body();

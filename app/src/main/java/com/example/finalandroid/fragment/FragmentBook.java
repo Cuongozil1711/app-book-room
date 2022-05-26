@@ -5,23 +5,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalandroid.ItemHotelAcivity;
+import com.example.finalandroid.activity.hotel.ItemHotelAcivity;
 import com.example.finalandroid.R;
 import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
-import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.dal.SqliteHelperHotel;
 import com.example.finalandroid.model.Hotel;
 

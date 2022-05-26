@@ -1,10 +1,11 @@
-package com.example.finalandroid;
+package com.example.finalandroid.model;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
     private Integer id;
+    private String uuId;
     private String email;
     private String name;
     private String password;
@@ -14,9 +15,12 @@ public class User implements Serializable {
     private String typeLogin;
     private String gener;
     private String image;
+    private String isPending;
+    private String accessToken;
 
-    public User(Integer id, String email, String name, String password, String phone, String age, String address, String typeLogin, String gener, String image) {
+    public User(Integer id, String uuId, String email, String name, String password, String phone, String age, String address, String typeLogin, String gener, String image, String isPending, String accessToken) {
         this.id = id;
+        this.uuId = uuId;
         this.email = email;
         this.name = name;
         this.password = password;
@@ -26,6 +30,12 @@ public class User implements Serializable {
         this.typeLogin = typeLogin;
         this.gener = gener;
         this.image = image;
+        this.isPending = isPending;
+        this.accessToken = accessToken;
+    }
+
+
+    public User() {
     }
 
     public Integer getId() {
@@ -34,6 +44,14 @@ public class User implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUuId() {
+        return uuId;
+    }
+
+    public void setUuId(String uuId) {
+        this.uuId = uuId;
     }
 
     public String getEmail() {
@@ -106,5 +124,21 @@ public class User implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getIsPending() {
+        return isPending;
+    }
+
+    public void setIsPending(String isPending) {
+        this.isPending = isPending;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

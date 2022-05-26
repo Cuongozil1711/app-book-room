@@ -1,4 +1,4 @@
-package com.example.finalandroid;
+package com.example.finalandroid.activity.hotel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,15 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.finalandroid.R;
+import com.example.finalandroid.activity.review.ReviewDetailsHotel;
+import com.example.finalandroid.adapter.RecycleViewHotelAdapter;
 import com.example.finalandroid.adapter.RecyleViewHistoryAdapter;
 import com.example.finalandroid.api.ApiService;
 import com.example.finalandroid.custom.ProgressDialogCustom;
 import com.example.finalandroid.dal.SqliteHelper;
 import com.example.finalandroid.model.HistoryBookRoom;
 import com.example.finalandroid.model.Hotel;
+import com.example.finalandroid.model.User;
 
 import java.util.List;
 
@@ -24,45 +27,40 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReviewHotelAcitivity extends AppCompatActivity implements RecyleViewHistoryAdapter.ItemListener{
+public class UserHotelLove extends AppCompatActivity implements RecycleViewHotelAdapter.ItemListener{
 
     private User user;
     private SqliteHelper sqliteHelper;
-    private List<HistoryBookRoom> bookRoomList;
+    private List<Hotel> bookRoomList;
     private Context context;
 
     private RecyclerView recyclerView;
-    private RecyleViewHistoryAdapter adapter;
-    private RecyleViewHistoryAdapter.ItemListener itemListener;
-    private Hotel hotel;
+    private RecycleViewHotelAdapter adapter;
+    private RecycleViewHotelAdapter.ItemListener itemListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review_hotel_acitivity);
-
+        setContentView(R.layout.activity_user_hotel_love);
         sqliteHelper = new SqliteHelper(this);
         user = sqliteHelper.getUser();
         context = this;
         recyclerView = findViewById(R.id.recycleView);
-        itemListener = this;
+        itemListener = (RecycleViewHotelAdapter.ItemListener) this;
         getListHistoryBookRoom();
     }
 
-    private void getIntentItem() {
-        hotel = (Hotel) getIntent().getSerializableExtra("hotel");
-    }
 
 
     private void getListHistoryBookRoom() {
         ProgressDialogCustom progressDialogCustom = new ProgressDialogCustom(context);
         progressDialogCustom.show();
-        ApiService.apiService.getHistoryBook(Integer.valueOf(user.getId()), "1").enqueue(new Callback<List<HistoryBookRoom>>() {
+        ApiService.apiService.findListHotelUserLike(user.getAccessToken(), Integer.valueOf(user.getId())).enqueue(new Callback<List<Hotel>>() {
             @Override
-            public void onResponse(Call<List<HistoryBookRoom>> call, Response<List<HistoryBookRoom>> response) {
+            public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
                 progressDialogCustom.hide();
                 bookRoomList = response.body();
-                adapter = new RecyleViewHistoryAdapter(context);
+                adapter = new RecycleViewHotelAdapter();
                 adapter.setmList(bookRoomList);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
                 recyclerView.setLayoutManager(linearLayoutManager);
@@ -71,7 +69,7 @@ public class ReviewHotelAcitivity extends AppCompatActivity implements RecyleVie
             }
 
             @Override
-            public void onFailure(Call<List<HistoryBookRoom>> call, Throwable t) {
+            public void onFailure(Call<List<Hotel>> call, Throwable t) {
                 progressDialogCustom.hide();
                 Toast.makeText(getApplicationContext(), "Call api error", Toast.LENGTH_SHORT).show();
             }
@@ -80,9 +78,15 @@ public class ReviewHotelAcitivity extends AppCompatActivity implements RecyleVie
 
     @Override
     public void onItemClick(View view, int position) {
-        HistoryBookRoom historyBookRoom = adapter.getItemPos(position);
-        Intent intent = new Intent(context, ReviewDetailsHotel.class);
-        intent.putExtra("hotel", historyBookRoom.getHotel());
+        Hotel hotel = adapter.getItemPos(position);
+        Intent intent = new Intent(context, ItemHotelAcivity.class);
+        intent.putExtra("hotel", hotel);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        getListHistoryBookRoom();
+        super.onResume();
     }
 }
