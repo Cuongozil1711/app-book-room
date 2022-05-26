@@ -2,11 +2,16 @@ package com.example.finalandroid.activity.hotel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +58,8 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
     private SqliteHelper sqliteHelper;
     private User user;
     private UserHotelLike userHotelLike;
-    private LinearLayout llReview;
+    private LinearLayout llReview, phoneHotel;
+    private int REQUEST_PHONE_CALL = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,7 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
         idFavorite = findViewById(R.id.idFavorite);
         idFavoriteTick = findViewById(R.id.idFavoriteTick);
         llReview = (LinearLayout) findViewById(R.id.llReview);
+        phoneHotel = (LinearLayout) findViewById(R.id.phoneHotel);
         sqliteHelper = new SqliteHelper(this);
         user = sqliteHelper.getUser();
         getIntentItem();
@@ -109,6 +116,35 @@ public class ItemHotelAcivity extends AppCompatActivity implements RecycleViewRo
                 updateUserLikeHotel("0");
             }
         });
+
+        phoneHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(hotel.getPhone() != null){
+
+                    if (ContextCompat.checkSelfPermission(ItemHotelAcivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(ItemHotelAcivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + hotel.getPhone()));
+                        startActivity(intent);
+                    }
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_PHONE_CALL && grantResults.length > 0){
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + hotel.getPhone()));
+            startActivity(intent);
+        }
     }
 
     private void updateUserLikeHotel(String s) {

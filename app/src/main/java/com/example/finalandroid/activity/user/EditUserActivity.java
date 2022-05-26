@@ -47,7 +47,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EditUserActivity extends AppCompatActivity{
-
     private static final int MY_REQUEST_CODE = 100;
     private TextView idPhone;
     private EditText idName, idEmail, eEdit;

@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -41,17 +42,10 @@ public class SearchProvince extends AppCompatActivity implements RecycleViewSele
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorChecked));
-        getListProvince();
-        itemListener = this;
+        itemListener = (RecycleViewSelectProvinceAdapter.ItemListener) this;
         recyclerView = findViewById(R.id.recycleViewSearch);
+        getListProvince();
         btBack = findViewById(R.id.btBack);
-        adapter = new RecycleViewSelectProvinceAdapter(this);
-        adapter.setmList(list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-        adapter.setItemListener(itemListener);
-
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,5 +132,12 @@ public class SearchProvince extends AppCompatActivity implements RecycleViewSele
         list.add(new NameSearch(61, "Hậu Giang"));
         list.add(new NameSearch(62, "Bạc Liêu"));
         list.add(new NameSearch(63, "Cà Mau"));
+
+        adapter = new RecycleViewSelectProvinceAdapter(this);
+        adapter.setItemListener(itemListener);
+        adapter.setmList(list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }

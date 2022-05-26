@@ -179,7 +179,7 @@ public class BookRoom extends AppCompatActivity {
                 .execute(room.getImage());
         idName.setText(room.getName());
         nameTabar.setText(room.getName());
-        idPrice.setText(room.getPrice());
+        idPrice.setText(room.getPrice() + "đ");
         tvMota.setText(room.getDescribe());
     }
 
