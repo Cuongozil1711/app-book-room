@@ -28,6 +28,8 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -184,8 +186,9 @@ public class ConfirmBookRoom extends AppCompatActivity {
 
             document.close();
             Toast.makeText(getApplicationContext(), "Đặt phòng thành công", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Environment.DIRECTORY_DOWNLOADS);
-            //intent.setDataAndType(Uri.parse(file.getAbsolutePath()), "application/pdf");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse(pdfPath + hotel.getName() + "_"  + room.getName() +
+                    System.currentTimeMillis() + "_" + ".pdf"), "application/pdf");
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
